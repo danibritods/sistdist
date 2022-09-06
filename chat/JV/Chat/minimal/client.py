@@ -44,79 +44,43 @@ def connect_to_address (server_address):
     server = xmlrpc.client.ServerProxy(server_url)
     return server
 
-def fill_with_spaces (str_name, size_to_reach):
-    '''aesthetics'''
-    return ' '*(size_to_reach-len(str_name))
-
-def append_borders (str_name):
-    '''aesthetics'''
-    return '| ' + str_name + ' |\n'
-
-def contacts_capsule (contact_list):
-    '''Just prints the capsule with the messages'''
-    header = 'Contact names'
-    all_lines = []
-    all_lines.append(header)
-    all_lines.append(contact_list)
-    max_size = max(list(map(len, all_lines)))
-    line = '-'*(max_size)
-    ab_line = append_borders(line)
-    ab_header = append_borders(header)
-    message = ab_line + ab_header + ab_line
-
-    for elem in contact_list:
-        message += append_borders(elem + fill_with_spaces(elem, max_size))
-    message += ab_line + '\n'
-
-    print(message)
-
-def contact_capsule (name, phone_number):
-    '''just a pretty box for the found phone number'''
-    header = 'Phone of ' + name.upper()
-    lines = [header, phone_number]
-    max_size = max(list(map(len, lines)))
-    line = '-'*max_size
-    filled_header = header + fill_with_spaces(header, max_size)
-    ab_header = append_borders(filled_header)
-    filled_phone_number = phone_number + fill_with_spaces(phone_number, max_size)
-    ab_phone_number = append_borders(filled_phone_number)
-
-
-    ab_line = append_borders(line)
-    message =  ab_line + ab_header
-    message += ab_line + ab_phone_number
-    message += ab_line + '\n'
-    print(message)
-
 def contact_server (server):
     '''doing stuff with the server'''
     name = ''
     messages = {
         'input_message': "\n Type:\n",
-        'options': "\t - A person's name\n\
-    \t - 'get names' to see all names\n\
-    \t - 'exit' to quit the program\n",
+        'options': "\
+\t - 'exit' to quit the program\n\
+\t - 'send' to send messages\n\
+\t - 'get ' to get all messages\n",
         'error_message': '\n No match for this name',
         'exit_message': '\n Exiting program \n',
+        'send_message': '\n Type "quit" to stop sending messages',
+        'pre_send_message': '\n What do you want to send?\n',
+        'skip_input': '> ',
+        'get_message': '\n Getting... \n',
         'line': 18*'= '
     }
 
     while name != 'exit':
-        name = ''
         name = input(messages['input_message'] + messages['options']).lower()
 
-        if name == 'get names':
-            contacts_capsule(list(server.get_db().keys()))
-            continue
         if name == 'exit':
             print(messages['exit_message'])
             continue
+        if name == 'send':
+            msg = ''
+            print(messages['send_message'])
+            print(messages['pre_send_message'])
+            while msg != 'quit':
+                msg = input(messages['skip_input'])
+                server.send_message(msg)
+        if name == 'get':
+            print(messages['get_message'])
+            received_log = server.get_message()
+            print(received_log)
 
-        phone_number = server.agenda(name)
-        if phone_number == 'not found':
-            print(messages['error_message'])
-        else:
-            contact_capsule(name, phone_number)
+
         print (messages['line'])
 
 def main ():

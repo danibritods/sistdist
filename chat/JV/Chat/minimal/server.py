@@ -3,22 +3,27 @@
 '''
 from xmlrpc.server import SimpleXMLRPCServer
 
-def get_db ():
-    '''returns a dictionary simulating a database'''
-    db_agenda = {
-        'agda': '(11) 9 9911-1111',
-        'beto': '(22) 9 9922-2222',
-        'ciro': '(33) 9 9933-3333',
-        'deni': '(44) 9 9944-4444'
-    }
-    return db_agenda
+message_log = ''
+index = 1
 
-def agenda(name):
-    '''Programa base'''
-    agenda_db = get_db()
-    if name in agenda_db:
-        return agenda_db[name]
-    return 'not found'
+def get_message ():
+    '''aaa'''
+    global message_log
+    global index
+    message = f'{index})\tget_message\n'
+    message_log += message
+    index += 1
+    # print(message_log)
+    return message_log
+
+def send_message (msg='placeholder'):
+    '''aaa'''
+    global message_log
+    global index
+    message = f'{index})\tsend_message\t"{msg}"\n'
+    message_log += message
+    index += 1
+    print(message)
 
 def get_address(default_address = 'no'):
     '''getting address'''
@@ -58,13 +63,14 @@ def configure_server ():
         'first_message': 'SERVER CONNECTED AT ',
         'await_message': 'Waiting for clients . . .'
     }
-
-    address = server_address['ip']+':'+server_address['port']
+    ip = server_address['ip']
+    port = server_address['port']
+    address = ip + ':' + port
     message = messages['first_message'] + address
     print(message)
-    server = SimpleXMLRPCServer((server_address['ip'], int(server_address['port'])))
-    server.register_function(agenda, 'public_agenda')
-    server.register_function(get_db, 'public_get_db')
+    server = SimpleXMLRPCServer((ip, int(port)), allow_none=True)
+    server.register_function(get_message, 'get_message')
+    server.register_function(send_message, 'send_message')
     print(messages['await_message'])
     server.serve_forever()
 
