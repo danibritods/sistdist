@@ -53,8 +53,20 @@ class Client(Socket):
         self._send_msg(request, self.socket)
     
     def Check_msg(self): #-> str:
-        messages = self._server_fetch_msg(self.id)
-        logging.info(messages)
+        messages = self._server_fetch_msg()
+        logging.info(f"The messages are: {messages}")
+        return messages
+
+    def _server_fetch_msg(self):
+        request = f'Check_msg({self.id})'
+        self._send_msg(request, self.socket)
+        messages = []
+        msg = "  "
+        # while msg != "":
+        msg = self._receive_msg(self.socket)
+        messages.append(msg)
+
+        return messages
 
 class Server(Socket):
     def __init__(self) -> None:
@@ -104,6 +116,27 @@ class Server(Socket):
         
         elif "Send_msg" in request:
             self._receive_chat(body)
+
+    def _fetch_msg(self,receiver_id, client_sock):
+        chat_keys = list(filter(lambda chat_id: (chat_id.split("#")[1] == receiver_id)
+                ,self.pending_msg.keys()))
+        logging.info(f"chat_keys: {chat_keys}")
+
+        chats = list(map(lambda chat_key :self._return_fetched_msg(chat_key)
+             ,chat_keys))        
+        logging.info(f"chats {receiver_id}: {chats}")
+        
+        # (list(map(lambda chat: self._send_msg(chat, client_sock)
+        #         ,chats)))
+        for chat in chats:
+            logging.info(f"sending chat: {chat}")
+            self._send_msg(chat,client_sock)
+
+    def _return_fetched_msg(self, chat_key):
+        chat = self.pending_msg[chat_key]
+        self.pending_msg[chat_key] = []
+        return f"<{chat_key}>\n{chat}"
+            
     def _receive_chat(self, message):
         split_message = message.split(">")
         chat_id = split_message[0].split("<")[1]
@@ -127,14 +160,27 @@ if __name__ == "__main__":
     c2 = Client("2")
     c1.Send_msg("2","hello c2")
     c2.Send_msg("1","hello c1!")
-    while True:
-        new_message = input("Write message C1: ")
-        c1.Send_msg("2", new_message)
-        new_message = input("Write message C2: ")
-        c2.Send_msg("1", new_message)
+    time.sleep(2)
+    print(10 * "--")
+    print(c1.Check_msg())
+    print("22")
+    print(c2.Check_msg())
+    print(10 * "--")
 
-    def Receive_msg(self, sender_ID, receiver_ID):
-        pass
+    # while True:
+    #     new_message = input("Write message C1: ")
+    #     c1.Send_msg("2", new_message)
+    #     new_message = input("Write message C2: ")
+    #     c2.Send_msg("1", new_message)
 
-    def Fetch_msg(self,receiver_ID):
-        pass
+    #     print(10 * "--")
+    #     c1.Check_msg()
+    #     print()
+    #     c2.Check_msg()
+
+"""
+TODO
+- [ ] Add broadcast option so that everyone in the same room can receive the messages
+- [ ] Make the basic chat work. It seems that like the receive message creates a inifinite loop, maybe just assint it to a thread
+
+"""
