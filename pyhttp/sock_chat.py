@@ -1,6 +1,7 @@
 import logging
 import socket
 import threading
+import time
 IP =  "127.0.0.1" 
 PORT = 1234
 RECV_SIZE = 1024
@@ -17,6 +18,7 @@ class Socket:
         s_client = self._stablish_socket()
         s_client.connect((IP, PORT))
         logging.info("client stablished!")
+
         return s_client
     
     def _server_socket(self):
@@ -39,12 +41,16 @@ class Client(Socket):
     def __init__(self, id) -> None:
         self.id = id
         self.socket = self._client_socket()
+        greeting = self._receive_msg(self.socket)
+        print(greeting)
 
-    def Send_msg(self,remote_id, message_body):
-        message_header = f"<{self.id}#{remote_id}>"
+
+    def Send_msg(self,receiver_id, message_body):
+        message_header = f"<{self.id}#{receiver_id}>"
         message = message_header + message_body
+        request = f'Send_msg("{message}")'
         
-        self._send_msg(message, self.socket)
+        self._send_msg(request, self.socket)
     
     def Check_msg(self): #-> str:
         messages = self._server_fetch_msg(self.id)
@@ -53,9 +59,9 @@ class Client(Socket):
 class Server(Socket):
     def __init__(self) -> None:
         self.pending_msg = {}
-        self.conections = []
-        self.conection_ids = []
-        conversation = ()
+        # self.clients = []
+        # self.conection_ids = []
+        # conversation = ()
         self.socket = self._server_socket()
         listening = threading.Thread(target=self._accept_conections)
         listening.start()
@@ -67,7 +73,7 @@ class Server(Socket):
             self._send_msg("Welcome to the server!", client_socket)
 
             # msg = self._receive_msg(clientsocket)
-            self.conections.append(client_socket)
+            # self.clients.append(client_socket)
             handler_thread = threading.Thread(target=self._handle_connection, args=(client_socket,))
             handler_thread.start()
 
@@ -75,20 +81,46 @@ class Server(Socket):
         while True:
             try:
                 message = self._receive_msg(client_sock)
-                message_split = message.split(">")
-                chat_id = message_split.split("<")[1]
-                message_body = message_split[1]
-                
-                self.pending_msg.setdefault(chat_id, []).append(message_body)
+                self._handle_msg(message, client_sock)
             except:
-                logging.info("some error!")
+                logging.error("some error!")
                 client_sock.close()
                 break
+    
+    def _handle_msg(self, message, client_sock):
+        # handle = {
+        #     "Check_msg" : self._fetch_msg,
+        #     "Send_msg" : self._receive_chat
+        # }
 
+        logging.info(f"message to handle: {message}")
+        request, body = message[:-1].split("(")
+        # handle[request](body)
+
+        if "Check_msg" in request:
+            # logging.error(f"ERROR in Check_msg. Request: {request}, body: {body}")
+            receiver_id = body #body.split("#")[1].split(">")[0]
+            self._fetch_msg(receiver_id, client_sock)
+        
+        elif "Send_msg" in request:
+            self._receive_chat(body)
+    def _receive_chat(self, message):
+        split_message = message.split(">")
+        chat_id = split_message[0].split("<")[1]
+        message_body = split_message[1]
+        
+        self.pending_msg.setdefault(chat_id, []).append(message_body)
+        logging.info(f"pending msg: {self.pending_msg}")
+
+    def Receive_msg(self, sender_ID, receiver_ID):
+        pass
+
+    def Fetch_msg(self,receiver_ID):
+        pass
 
 if __name__ == "__main__":
     format = "%(asctime)s: %(message)s"
-    logging.basicConfig(format=format, level=logging.INFO,
+    logging.basicConfig(format=format, level=logging.ERROR,
                         datefmt="%H:%M:%S")
     s = Server()
     c1 = Client("1")
