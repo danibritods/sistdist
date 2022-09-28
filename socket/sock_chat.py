@@ -1,7 +1,8 @@
+'''Chat using sockets'''
 import logging
 import socket
 import threading
-IP =  "127.0.0.1" 
+IP =  "127.0.0.1"
 PORT = 1234
 RECV_SIZE = 1024
 
@@ -87,8 +88,8 @@ class Server(Socket):
 
 
 if __name__ == "__main__":
-    format = "%(asctime)s: %(message)s"
-    logging.basicConfig(format=format, level=logging.INFO,
+    formatting = "%(asctime)s: %(message)s"
+    logging.basicConfig(format=formatting, level=logging.INFO,
                         datefmt="%H:%M:%S")
     s = Server()
     c1 = Client("1")

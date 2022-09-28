@@ -1,7 +1,7 @@
 '''aaa'''
 #https://www.researchgate.net/publication/341271544_Remote_Method_Invocation_Using_Python
-import os
-import subprocess
+# import os
+# import subprocess
 import random
 import datetime
 import Pyro4
