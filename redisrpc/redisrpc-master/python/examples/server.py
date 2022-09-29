@@ -1,16 +1,16 @@
 #!/usr/bin/env python
-
+'''docstring'''
 import argparse
 import logging
 import sys
 
-import redis
-
-# Allow this script to run without installing redisrpc.
-sys.path.append('..')
-import redisrpc
-
 import calc
+# Allow this script to run without installing redisrpc.
+import redisrpc
+import redis
+sys.path.append('..')
+
+
 
 
 # Direct all RedisPRC logging messages to stderr.
