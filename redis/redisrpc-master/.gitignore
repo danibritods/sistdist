@@ -1,0 +1,19 @@
+README.html
+# Ruby
+.rvmrc
+*.gem
+ruby/lib/redisrpc/version.rb
+# PHP
+composer.lock
+composer.phar
+php/vendor
+# Python
+*.pyc
+python/.tox
+python/LICENSE
+python/README.rst
+python/VERSION
+python/build
+python/dist
+python/redisrpc.egg-info
+python/redis-server.log
