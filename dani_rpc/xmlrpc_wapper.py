@@ -6,10 +6,7 @@ PORT = config.PORT
 
 class Server():
     def __init__(self, functions) -> None:
-        self.ip = IP
-        self.port = PORT
-    
-        x_server = SimpleXMLRPCServer((IP, PORT), allow_none=True, bind_and_activate=True)
+        x_server = SimpleXMLRPCServer((IP, PORT), allow_none=True)
         x_server.allow_reuse_address = True
         for func, func_name in functions.items():
             x_server.register_function(func, func_name)
