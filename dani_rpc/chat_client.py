@@ -1,8 +1,7 @@
 import chat
 import xmlrpc_wapper as rpc
 
-if __name__ == "__main__":
-    
+def test_routine():
     rpc = rpc.Client()
     daniel = chat.Client("Daniel",rpc.connection)
     joao = chat.Client("Joao",rpc.connection)
@@ -12,4 +11,10 @@ if __name__ == "__main__":
     daniel.send_msg("Doris","tudo bem?")
     joao.send_msg("Daniel","Te pago amanhã")
     print(doris.check_msg())
+
+
+if __name__ == "__main__":
+    test_routine() 
+
+
 
