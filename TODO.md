@@ -38,6 +38,16 @@
 
 - [ ] Show what was discovered
 
+### Classroom - 30/09/2022
+
+- [ ] Client
+  - [ ] Set unique id for each client
+  - [ ] Directed message
+  - [ ] Optional: multicast message
+  - [ ] Optional: broadcast message
+- [ ] Server
+  - [ ] Return json
+
 ## V0.N
 
 - [ ] Set timestamp in each message
