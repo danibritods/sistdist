@@ -4,12 +4,37 @@
 from xmlrpc.server import SimpleXMLRPCServer
 
 message_log = ''
+message_log_v2 = {}
 index = 1
-IP= '26.26.5.240'
+IP= '26.41.56.188'
 # IP_original= '127.0.0.1'
-# IP_radmin= '26.26.5.240'
+# IP_radmin= '26.41.56.188'
 # IP_JV= '192.168.100.11'
 PORT= '8080'
+# {"Daniel" : ["oi", "tudo bem?"] , "Joao Vitor" : ["Te pago amanha"]}
+'''
+SERVER{
+    B:["A": "oipudim"]
+    C:[
+        "A":["tchaupudim", "oidnv"]
+        "B":["gato"]
+      ]
+}
+
+CLIENT{A}
+    B:oipudim
+    C:tchaupudim
+    C:oidnv
+    getmsg
+    <- {}
+CLIENT{B}
+    C:gato
+    getmsg
+    <- {"A": ["oipudim"]}
+CLIENT{C}
+    getmsg
+    <- {"A": ["tchaupudim", "oidnv"], "B": ["gato"]}
+'''
 
 def get_message ():
     '''aaa'''
