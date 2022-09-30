@@ -19,7 +19,7 @@ class Client:
     def send_msg(self, remote_id, msg):
         self.server.receive_msg(self.id, remote_id, msg)
 
-    def check_msg(self, server):
+    def check_msg(self):
         return self.server.get_msg(self.id)
 
 if __name__ == "__main__":
@@ -31,4 +31,4 @@ if __name__ == "__main__":
     daniel.send_msg("Doris","Oi")
     daniel.send_msg("Doris","tudo bem?")
     joao.send_msg("Daniel","Te pago amanhã")
-    doris.check_msg(s)
+    doris.check_msg()
