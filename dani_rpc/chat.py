@@ -9,7 +9,8 @@ class Server:
         return chats
 
     def receive_msg(self, sender_id, receiver_id, msg):
-        self.pending_messages.setdefault(f"{sender_id}#{receiver_id}",[]).append(msg)
+        chat_id = f"{sender_id}#{receiver_id}"
+        self.pending_messages.setdefault(chat_id,[]).append(msg)
 
 class Client:
     def __init__(self, client_id, server) -> None:
@@ -19,7 +20,7 @@ class Client:
     def send_msg(self, remote_id, msg):
         self.server.receive_msg(self.id, remote_id, msg)
 
-    def check_msg(self):
+    def check_msg(self, server):
         return self.server.get_msg(self.id)
 
 if __name__ == "__main__":
@@ -31,4 +32,4 @@ if __name__ == "__main__":
     daniel.send_msg("Doris","Oi")
     daniel.send_msg("Doris","tudo bem?")
     joao.send_msg("Daniel","Te pago amanhã")
-    doris.check_msg()
+    doris.check_msg(s)
