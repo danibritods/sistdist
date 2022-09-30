@@ -11,5 +11,5 @@ if __name__ == "__main__":
     daniel.send_msg("Doris","Oi")
     daniel.send_msg("Doris","tudo bem?")
     joao.send_msg("Daniel","Te pago amanhã")
-    print(doris.check_msg(rpc.connection))
+    print(doris.check_msg())
 
