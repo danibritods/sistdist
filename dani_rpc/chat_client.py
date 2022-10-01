@@ -14,16 +14,19 @@ def test_routine():
 
 def client_interface():
     rpc_client = rpc.Client()
-    client_id = input("Write your client ID: ")
+    client_id = input("Your client ID: ")
+    receiver_id = input("Receiver_id: ")
+
     client = chat.Client(client_id, rpc_client.connection)
     message = ""
 
     while message != "q!":
-        receiver_id = input("receiver_id: ")
         message = input("message: ")
-
+        if message == "c!":
+            receiver_id = input("new receiver_id: ")
+        elif message != "":
         client.send_msg(receiver_id, message)
-
+        print(f"{10*'-·-'} \n {str(client.check_msg()):<1000} \n {15*'-·'}")
         print(f"{10*'-·-'} \n {client.check_msg()} \n {15*'-·'}")
 
 if __name__ == "__main__":
