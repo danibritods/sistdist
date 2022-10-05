@@ -3,13 +3,14 @@
 '''
 from xmlrpc.server import SimpleXMLRPCServer
 
-message_log = ''
-index = 1
 IP= '26.41.56.188'
 # IP_original= '127.0.0.1'
 # IP_radmin= '26.41.56.188'
 # IP_JV= '192.168.100.11'
+# IP_JVVP_radmin= '26.12.16.183'
 PORT= '8080'
+index = 1
+message_log = ''
 
 def get_message ():
     '''aaa'''
