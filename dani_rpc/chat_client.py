@@ -25,9 +25,9 @@ def client_interface():
         if message == "c!":
             receiver_id = input("new receiver_id: ")
         elif message != "":
-        client.send_msg(receiver_id, message)
-        print(f"{10*'-·-'} \n {str(client.check_msg()):<1000} \n {15*'-·'}")
-        print(f"{10*'-·-'} \n {client.check_msg()} \n {15*'-·'}")
+            client.send_msg(receiver_id, message)
+            print(f"{10*'-·-'} \n {str(client.check_msg()):<1000} \n {15*'-·'}")
+            print(f"{10*'-·-'} \n {client.check_msg()} \n {15*'-·'}")
 
 if __name__ == "__main__":
     client_interface() 

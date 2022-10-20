@@ -5,15 +5,14 @@ import xmlrpc.client
 import random
 from datetime import datetime
 
-def get_address():
+def get_address(address_option=0):
     '''returning address'''
-    selection = ['IP_original', 'IP_radmin_JVFD', 'IP_radmin_JVVP']
     IPS= {
-        selection[0]: '127.0.0.1',
-        selection[1]: '26.41.56.188',
-        selection[2]: '26.12.16.183',
+        0: '127.0.0.1', # localhost (?)
+        1: '26.41.56.188', # Smartphone JVFD (ou radmin)
+        2: '26.12.16.183', # IP_radmin_JVVP
     }
-    IP= IPS[selection[1]]
+    IP= IPS[address_option]
     PORT= '8080'
     return (IP, int(PORT))
 
