@@ -9,103 +9,93 @@ message_log_v2 = {}
 # {"Daniel" : ["oi", "tudo bem?"] , "Joao Vitor" : ["Te pago amanha"]}
 
 
-def get_address():
-    '''returning address'''
-    selection = ['IP_original', 'IP_radmin_JVFD', 'IP_radmin_JVVP']
-    IPS= {
-        selection[0]: '127.0.0.1',
-        selection[1]: '26.41.56.188',
-        selection[2]: '26.12.16.183',
-    }
-    IP= IPS[selection[1]]
-    PORT= '8080'
-    return (IP, int(PORT))
-
-
-'''
-id_receiver = input(messages['get_receiver'])
-
-# Adicionando valor de chave aninhada ao dicionário
-Dict[5] = {'Nested' :{'1' : 'Life', '2' : 'Geeks'}}
-print("\nAdding a Nested Key: ")
-print(Dict)
-
-dict_message[id_receiver]={id_sender : message}
-
-SERVER{
-    B:{
-        {
-            "A": "oipudim"
-        }
-    }
-    C:{
-        {"A":["tchaupudim", "oidnv"]
-        "B":["gato"]}
-      }
-}
-
-CLIENT{A}
-    B:oipudim
-    C:tchaupudim
-    C:oidnv
-    getmsg
-    <- {}
-CLIENT{B}
-    C:gato
-    getmsg
-    <- {"A": ["oipudim"]}
-CLIENT{C}
-    getmsg
-    <- {"A": ["tchaupudim", "oidnv"], "B": ["gato"]}
-'''
-
-
 def global_log_1(id_sender, id_receiver='', msg=''):
     '''logging'''
     global message_log_v1
-    global message_log_v2
     global index
     send_capsule = f'"{id_sender}" = ({msg}) => "{id_receiver}"\n'
     message = f'{index})\tsend_message:\t {send_capsule}\n'
     message_log_v1 += message
     index += 1
-    print(message)
+    print('\n', message)
 
-def global_log_2(id_sender, id_receiver,msg):
-    '''abc
+
+def global_log_2(id_sender, id_receiver, msg):
+    '''Storing all the server messages in a json format
     '''
     global message_log_v2
-    if message_log_v2[id_receiver][id_sender] == {} :
-        message_log_v2[id_receiver][id_sender] = [msg]
-    to_insert = message_log_v2[id_receiver][id_sender]
-    to_insert.append(msg)
-    message_log_v2[id_receiver][id_sender] = to_insert
+    local_message_log = message_log_v2
+    is_first_receiver_user = id_receiver not in local_message_log
+    if is_first_receiver_user:
+        local_message_log.setdefault(id_receiver, {id_sender: [msg]})
+    else:
+        is_first_sender_user = id_sender not in local_message_log[id_receiver]
+        if is_first_sender_user:
+            local_message_log[id_receiver].setdefault(
+                id_sender, [msg])
+        else:
+            local_message_log[id_receiver][id_sender].append(msg)
+    print(local_message_log, '\n')
+    message_log_v2 = local_message_log
 
 
-def get_message ():
+def get_msg(id_sender):
     '''gets message from the server'''
     global message_log_v1
     global index
-    message = f'{index})\tget_message\n'
+    message = f'{index})\tget_message: \t "{id_sender}"\n'
     message_log_v1 += message
     index += 1
-    # print(message_log)
-    return message_log_v1
+    print(message)
+    global message_log_v2
 
-def send_message(client_id, id_receiver, msg='placeholder'):
+    local_message_log = message_log_v2
+    msg_to_send_back = 'No messages to be seen here.'
+    has_messages = id_sender in local_message_log
+    if has_messages:
+        msg_to_send_back = message_log_v2[id_sender]
+    return msg_to_send_back
+
+
+def receive_msg(client_id, id_receiver, msg='placeholder'):
     '''the client sends a message to someone and it is stored'''
     global_log_1(client_id, id_receiver, msg)
     global_log_2(client_id, id_receiver, msg)
 
-def configure_server ():
+
+def configure_server():
     '''configuring server'''
+
+    def get_address(address_option=0):
+        '''returning address'''
+        IPS = {
+            0: '127.0.0.1',  # localhost (?)
+            1: '26.41.56.188',  # Smartphone JVFD (ou radmin)
+            2: '26.12.16.183',  # IP_radmin_JVVP
+        }
+        IP = IPS[address_option]
+        PORT = '8080'
+        return (IP, int(PORT))
+
+    prompts = {
+        'configuring': '\nStarting server configuration...',
+        'ready': 'Server is ready to handle calls.\n'
+    }
+    print(prompts['configuring'])
     server = SimpleXMLRPCServer(get_address(), allow_none=True)
-    server.register_function(get_message, 'get_message')
-    server.register_function(send_message, 'send_message')
+    server_functions = {
+        get_msg: 'get_msg',
+        receive_msg: 'receive_msg'
+    }
+    for func, func_name in server_functions.items():
+        server.register_function(func, func_name)
+    print(prompts['ready'])
     server.serve_forever()
+
 
 def main():
     '''main Server code'''
     configure_server()
+
 
 main()
