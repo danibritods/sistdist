@@ -50,7 +50,7 @@ def get_msg(id_sender):
     global message_log_v2
 
     local_message_log = message_log_v2
-    msg_to_send_back = 'No messages to be seen here.'
+    msg_to_send_back = {}
     has_messages = id_sender in local_message_log
     if has_messages:
         msg_to_send_back = message_log_v2[id_sender]
