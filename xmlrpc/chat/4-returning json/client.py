@@ -7,15 +7,26 @@ import xmlrpc.client
 def server_connection():
     '''abstraction for server connection. Should return a connected server object'''
 
-    def get_address(address_option=0):
+    def get_address(ip_option=0, port_option=0):
         '''returning address'''
         IPS = {
             0: '127.0.0.1',  # localhost (?)
             1: '26.41.56.188',  # Smartphone JVFD (ou radmin)
             2: '26.12.16.183',  # IP_radmin_JVVP
+            3: '192.168.43.141',  # DaniBrito
+            4: '192.168.0.110',  # DaniBrito novo
+            5: '192.168.43.141/24',  # DaniBrito
+            6: '192.168.0.107',  # JVFD
+            7: '26.41.56.188',  # JVFD  Radmin
+            8: '192.168.1.238',  # ZehLu
         }
-        IP = IPS[address_option]
-        PORT = '8080'
+        PORTs = {
+            0: '8080',  # JV
+            1: '9003',  # Dani Brito
+            2: '8085',  # ZehLu
+        }
+        IP = IPS[ip_option]
+        PORT = PORTs[port_option]
         return (IP, int(PORT))
 
     def connect_to_address(address):
@@ -62,7 +73,7 @@ def sending_message(server, client_id):
         if msg == 'chng':
             id_receiver = messages_gui(prompts)
             msg = input(id_receiver + prompts['sending_sign'])
-        server.receive_msg(client_id, id_receiver, msg)
+        server.receiveMessage(client_id, id_receiver, msg)
         msg = input(id_receiver + prompts['sending_sign'])
     print(prompts['line'])
 
@@ -73,7 +84,7 @@ def getting_message(server, client_id):
         'get_message': '\n Getting messages... \n',
     }
     print(prompts['get_message'])
-    received_log = server.get_msg(client_id)
+    received_log = server.getMessage(client_id)
     print(received_log)
 
 

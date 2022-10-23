@@ -39,7 +39,7 @@ def global_log_2(id_sender, id_receiver, msg):
     message_log_v2 = local_message_log
 
 
-def get_msg(id_sender):
+def getMessage(id_sender):
     '''gets message from the server'''
     global message_log_v1
     global index
@@ -57,7 +57,7 @@ def get_msg(id_sender):
     return msg_to_send_back
 
 
-def receive_msg(client_id, id_receiver, msg='placeholder'):
+def receiveMessage(client_id, id_receiver, msg='placeholder'):
     '''the client sends a message to someone and it is stored'''
     global_log_1(client_id, id_receiver, msg)
     global_log_2(client_id, id_receiver, msg)
@@ -66,15 +66,26 @@ def receive_msg(client_id, id_receiver, msg='placeholder'):
 def configure_server():
     '''configuring server'''
 
-    def get_address(address_option=0):
+    def get_address(ip_option=0, port_option=0):
         '''returning address'''
         IPS = {
             0: '127.0.0.1',  # localhost (?)
             1: '26.41.56.188',  # Smartphone JVFD (ou radmin)
             2: '26.12.16.183',  # IP_radmin_JVVP
+            3: '192.168.43.141',  # DaniBrito
+            4: '192.168.0.110',  # DaniBrito novo
+            5: '192.168.43.141/24',  # DaniBrito
+            6: '192.168.0.107',  # JVFD
+            7: '26.41.56.188',  # JVFD  Radmin
+            8: '192.168.1.238',  # ZehLu
         }
-        IP = IPS[address_option]
-        PORT = '8080'
+        PORTs = {
+            0: '8080',  # JV
+            1: '9003',  # Dani Brito
+            2: '8085',  # ZehLu
+        }
+        IP = IPS[ip_option]
+        PORT = PORTs[port_option]
         return (IP, int(PORT))
 
     prompts = {
@@ -84,8 +95,8 @@ def configure_server():
     print(prompts['configuring'])
     server = SimpleXMLRPCServer(get_address(), allow_none=True)
     server_functions = {
-        get_msg: 'get_msg',
-        receive_msg: 'receive_msg'
+        getMessage: 'getMessage',
+        receiveMessage: 'receiveMessage'
     }
     for func, func_name in server_functions.items():
         server.register_function(func, func_name)
