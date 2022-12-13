@@ -164,10 +164,8 @@ Como aprimoramentos para as aplicações apontadas, vê-se a listagem do arquivo
 
 </details>
 
-<!-- Adicionar depois o link pro github do professor -->
 <!-- # Introdução -->
-[GitHubProf]: https://github.com/
-<!--  -->
+[GitHubProf]: https://github.com/jlalmeidaf
 [GitHubJVFD]: https://github.com/jvfd3
 [GitHubDani]: https://github.com/dbs-97
 [GitHubJVVP]: https://github.com/jvvp2000
@@ -189,12 +187,10 @@ Como aprimoramentos para as aplicações apontadas, vê-se a listagem do arquivo
 [LinkTkinter]: https://docs.python.org/3/library/tkinter.html
 [LinkThread]: https://docs.python.org/3/library/threading.html
 [LinkHeterogeneidade]: https://sites.google.com/site/proffdesiqsistemasdistribuidos/aulas/caracterizacao-de-sistemas-distribuidos#:~:text=que%20podem%20ser-,heterog%C3%AAneos,-%2C%20com%20diferentes%20sistemas
-<!--  -->
-[GitHubJose]: https://github.com/
+[GitHubJose]: https://github.com/zehlu
 [LinkHamachi]: https://www.vpn.net/
 [LinkRadmin]: https://www.radmin-vpn.com/
-<!--  -->
-[RepositorioJose]: https://github.com/
+[RepositorioJose]: https://github.com/Zehlu/Trabalho_de_distribuidos
 <!-- ## Conclusão -->
 <!--  -->
 [HiperLinkToDo]: https://github.com/
