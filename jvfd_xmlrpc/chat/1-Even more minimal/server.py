@@ -3,17 +3,18 @@
 '''
 from xmlrpc.server import SimpleXMLRPCServer
 
-IP= '26.41.56.188'
+IP = '26.41.56.188'
 # IP_original= '127.0.0.1'
 # IP_radmin= '26.41.56.188'
 # IP_JV= '192.168.100.11'
 # IP_JVVP_radmin= '26.12.16.183'
-PORT= '8080'
+PORT = '8080'
 index = 1
 message_log = ''
 
-def get_message ():
-    '''aaa'''
+
+def get_message():
+    '''ToDo'''
     global message_log
     global index
     message = f'{index})\tget_message\n'
@@ -22,8 +23,9 @@ def get_message ():
     # print(message_log)
     return message_log
 
-def send_message (msg='placeholder'):
-    '''aaa'''
+
+def send_message(msg='placeholder'):
+    '''ToDo'''
     global message_log
     global index
     message = f'{index})\tsend_message\t"{msg}"\n'
@@ -31,7 +33,8 @@ def send_message (msg='placeholder'):
     index += 1
     print(message)
 
-def configure_server ():
+
+def configure_server():
     '''configuring server'''
     global IP
     global PORT
@@ -40,8 +43,10 @@ def configure_server ():
     server.register_function(send_message, 'send_message')
     server.serve_forever()
 
-def main ():
+
+def main():
     '''main Server code'''
-    configure_server ()
+    configure_server()
+
 
 main()

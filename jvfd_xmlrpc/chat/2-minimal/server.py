@@ -6,8 +6,9 @@ from xmlrpc.server import SimpleXMLRPCServer
 message_log = ''
 index = 1
 
-def get_message ():
-    '''aaa'''
+
+def get_message():
+    '''ToDo'''
     global message_log
     global index
     message = f'{index})\tget_message\n'
@@ -16,8 +17,9 @@ def get_message ():
     # print(message_log)
     return message_log
 
-def send_message (msg='placeholder'):
-    '''aaa'''
+
+def send_message(msg='placeholder'):
+    '''ToDo'''
     global message_log
     global index
     message = f'{index})\tsend_message\t"{msg}"\n'
@@ -25,7 +27,8 @@ def send_message (msg='placeholder'):
     index += 1
     print(message)
 
-def get_address(default_address = 'no'):
+
+def get_address(default_address='no'):
     '''getting address'''
     messages = {
         'input_message': 'Do you want to manually input your address?',
@@ -37,7 +40,7 @@ def get_address(default_address = 'no'):
     option = 0
     if default_address == 'no':
         print(messages['line'])
-        option = input (messages['input_message'] + messages['options'])
+        option = input(messages['input_message'] + messages['options'])
 
     has_manual_input = option == '1'
 
@@ -56,7 +59,8 @@ def get_address(default_address = 'no'):
     print(messages['line'])
     return used_address
 
-def configure_server ():
+
+def configure_server():
     '''configuring server'''
     server_address = get_address()
     messages = {
@@ -74,8 +78,10 @@ def configure_server ():
     print(messages['await_message'])
     server.serve_forever()
 
-def main ():
+
+def main():
     '''main Server code'''
-    configure_server ()
+    configure_server()
+
 
 main()

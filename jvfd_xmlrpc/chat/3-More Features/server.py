@@ -3,7 +3,8 @@
 '''
 from xmlrpc.server import SimpleXMLRPCServer
 
-def get_db ():
+
+def get_db():
     '''returns a dictionary simulating a database'''
     db_agenda = {
         'agda': '(11) 9 9911-1111',
@@ -13,14 +14,16 @@ def get_db ():
     }
     return db_agenda
 
+
 def agenda(name):
-    '''Programa base'''
+    '''Base Code'''
     agenda_db = get_db()
     if name in agenda_db:
         return agenda_db[name]
     return 'not found'
 
-def get_address(default_address = 'no'):
+
+def get_address(default_address='no'):
     '''getting address'''
     messages = {
         'input_message': 'Do you want to manually input your address?',
@@ -32,7 +35,7 @@ def get_address(default_address = 'no'):
     option = 0
     if default_address == 'no':
         print(messages['line'])
-        option = input (messages['input_message'] + messages['options'])
+        option = input(messages['input_message'] + messages['options'])
 
     has_manual_input = option == '1'
 
@@ -51,7 +54,8 @@ def get_address(default_address = 'no'):
     print(messages['line'])
     return used_address
 
-def configure_server ():
+
+def configure_server():
     '''configuring server'''
     server_address = get_address()
     messages = {
@@ -62,14 +66,17 @@ def configure_server ():
     address = server_address['ip']+':'+server_address['port']
     message = messages['first_message'] + address
     print(message)
-    server = SimpleXMLRPCServer((server_address['ip'], int(server_address['port'])))
+    server = SimpleXMLRPCServer(
+        (server_address['ip'], int(server_address['port'])))
     server.register_function(agenda)
     server.register_function(get_db)
     print(messages['await_message'])
     server.serve_forever()
 
-def main ():
+
+def main():
     '''main Server code'''
-    configure_server ()
+    configure_server()
+
 
 main()
