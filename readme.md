@@ -205,7 +205,6 @@ Como aprimoramentos para as aplicações apontadas, vê-se a listagem do arquivo
 [LinkRadmin]: https://www.radmin-vpn.com/
 [RepositorioJose]: https://github.com/Zehlu/Trabalho_de_distribuidos
 <!-- ## Conclusão -->
-<!--  -->
-[HiperLinkToDo]: https://github.com/
+[HiperLinkToDo]: https://github.com/dbs-97/sistdist/blob/main/TODO.md#todo
 [LinkDaniRpc]: ./dani_rpc/
 [LinkJvfdXmlRpc]: ./jvfd_xmlrpc/
