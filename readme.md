@@ -94,7 +94,11 @@ Essa implementação, passou por algumas iterações que estão divididas em pas
 
 ### [João Pinto][GitHubJVVP]
 
-[João Pinto][GitHubJVVP] utilizou da implementação em [Python 2][LinkPython2] disponibilizada pelo Siddhartha Sahu em seu [GitHub][GitHubP2P] que apresenta uma estrutura simples e monolítica, entretanto, orientada a objetos, para que através das bibliotecas [Socket][LinkSocket] para conexão, [Tkinter][LinkTkinter] para interface gráfica e [Threads][LinkThread] para a distribuição de tarefas em diversas threads, de modo a desenvolver uma aplicação de conexão remota para envio de mensagens através de IP e Porta.
+[João Pinto][GitHubJVVP] utilizou da implementação em [Python 2][LinkPython2] disponibilizada pelo Siddhartha Sahu para recriar um aplicativo similar em Peer-to-Peer que utiliza de Sockets como principal meio de comunicação. O aplicativo sofreu alterações para, principalmente, adaptar o código para o Python 3. Sobre a arquitetura desse: 
+- chatApp.py
+    - que apresenta uma estrutura simples e monolítica, entretanto, orientada a objetos, para que através das bibliotecas [Socket][LinkSocket] para conexão, [Tkinter][LinkTkinter] para interface gráfica e [Threads][LinkThread] para a distribuição de tarefas em diversas threads (como o funcionamento do servidor e cliente ao mesmo tempo).  
+
+O objetivo principal desse arquivo é o desenvolvimento uma aplicação de conexão remota para envio de mensagens através de IP e Porta, que possui uma como principal característica ser Peer-to-Peer. Essa arquitetura (P2P) é um sistema para compartilhamento de informações sem a necessidade de um servidor central, ou seja, cada um tem o seu servidor que conecta com o cliente em que você quer falar. 
 
 <details> <summary>
 
