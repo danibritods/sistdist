@@ -183,7 +183,7 @@ Como aprimoramentos para as aplicações apontadas, vê-se a listagem do arquivo
 <!-- # Introdução -->
 [GitHubProf]: https://github.com/jlalmeidaf
 [GitHubJVFD]: https://github.com/jvfd3
-[GitHubDani]: https://github.com/dbs-97
+[GitHubDani]: https://github.com/danibritods
 <!-- [GitHubJVVP]: https://github.com/jvvp2000 -->
 [GitHubJVVP]: https://github.com/vittorpinto
 <!-- ## Linguagem -->
